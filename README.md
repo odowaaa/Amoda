@@ -24,7 +24,6 @@ incrementally. See [Roadmap](#roadmap) for what's scaffolded vs. what's next.
 ## Monorepo structure
 
 ```
-amoda/
 ├── apps/
 │   ├── api/                # NestJS backend
 │   │   ├── prisma/         # schema.prisma, migrations, seed.ts
@@ -42,7 +41,7 @@ amoda/
 ├── packages/
 │   └── shared/              # Shared Zod schemas, enums, types used by both apps
 ├── docker-compose.yml
-└── .github/workflows/amoda-ci.yml (repo root)
+└── .github/workflows/         # ci.yml, deploy.yml
 ```
 
 ## What's implemented
@@ -103,7 +102,6 @@ amoda/
 ### 1. Install dependencies
 
 ```bash
-cd amoda
 npm install
 ```
 
@@ -168,8 +166,8 @@ Interactive Swagger docs are served at `GET /api/docs` once the API is running.
 - **Backend**: deploy `apps/api` to Railway, DigitalOcean App Platform, or any Docker host using
   `apps/api/Dockerfile`. Run `npx prisma migrate deploy` on release.
 - **Database**: managed PostgreSQL (Railway, DigitalOcean Managed Postgres, RDS, etc.).
-- **CI**: `.github/workflows/amoda-ci.yml` lints, typechecks, runs tests against a Postgres service
-  container, and builds both apps on every push/PR that touches `amoda/**`.
+- **CI**: `.github/workflows/ci.yml` lints, typechecks, runs tests against a Postgres service
+  container, and builds both apps on every push/PR.
 
 ## Roadmap
 

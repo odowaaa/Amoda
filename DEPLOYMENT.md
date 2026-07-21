@@ -9,7 +9,7 @@ Two ways to trigger deploys, pick one:
 - **Native integration (recommended, zero extra CI code)**: connect the repo directly in the
   Vercel and Railway dashboards. Both platforms auto-deploy on push once configured. This is
   what the step-by-step below assumes.
-- **Actions-driven** (`.github/workflows/amoda-deploy.yml`, already in this repo): deploys via
+- **Actions-driven** (`.github/workflows/deploy.yml`, already in this repo): deploys via
   the Vercel/Railway CLIs, gated on `AMODA CI` passing. Useful if you want an explicit approval
   gate or don't want to grant either platform direct repo access. Each job no-ops until you add
   its secrets (`VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` or `RAILWAY_TOKEN`), so it's
@@ -46,8 +46,8 @@ Railway can provision Postgres directly in the same project as the API:
 ## 3. Deploy the API (Railway)
 
 1. **New → Deploy from GitHub repo**, pick this repo.
-2. Set **Root Directory** to `amoda`. Railway will detect `railway.json` (already committed) and
-   build `apps/api/Dockerfile` — no build command needed.
+2. Railway will detect `railway.json` (already committed) and build `apps/api/Dockerfile` — no
+   build command or root directory override needed.
 3. Add environment variables (Settings → Variables). At minimum:
    - `DATABASE_URL` → reference the Postgres service's variable (`${{Postgres.DATABASE_URL}}`)
    - `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET` → generate with `openssl rand -hex 32` each
@@ -67,9 +67,9 @@ Railway can provision Postgres directly in the same project as the API:
 ## 4. Deploy the web app (Vercel)
 
 1. **Add New → Project**, import this repo.
-2. Set **Root Directory** to `amoda`. Vercel will pick up `vercel.json` (already committed),
-   which builds `packages/shared` before `apps/web` and points at `apps/web/.next` as the output.
-   Framework preset: Next.js (auto-detected).
+2. Vercel will pick up `vercel.json` (already committed), which builds `packages/shared` before
+   `apps/web` and points at `apps/web/.next` as the output. Framework preset: Next.js
+   (auto-detected). No root directory override needed.
 3. Add environment variables (Project Settings → Environment Variables):
    - `NEXT_PUBLIC_API_URL` → `https://<your-api-domain>/api/v1`
    - `NEXT_PUBLIC_SITE_URL` → your Vercel URL (or custom domain once attached)
@@ -120,8 +120,8 @@ Do this before pointing real users at it:
 ## Alternative hosts
 
 - **DigitalOcean App Platform** instead of Railway: it also builds directly from
-  `apps/api/Dockerfile` given `amoda` as the source directory — the same Dockerfile and
-  `startCommand` pattern apply, just configured through DO's App Spec instead of `railway.json`.
-- **Self-hosted Docker** (any VPS): use `docker-compose.yml` at the `amoda/` root, which runs
-  Postgres, Redis, the API, and the web app together. Fill in `amoda/.env` from `.env.example`
-  first, then `docker compose up --build -d`.
+  `apps/api/Dockerfile` — the same Dockerfile and `startCommand` pattern apply, just configured
+  through DO's App Spec instead of `railway.json`.
+- **Self-hosted Docker** (any VPS): use `docker-compose.yml` at the repo root, which runs
+  Postgres, Redis, the API, and the web app together. Fill in `.env` from `.env.example` first,
+  then `docker compose up --build -d`.
