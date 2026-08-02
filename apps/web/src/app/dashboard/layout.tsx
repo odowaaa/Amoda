@@ -77,9 +77,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const navItems = navItemsFor(user.role);
 
   return (
-    <div className="container-page grid gap-8 py-10 lg:grid-cols-[240px_1fr]">
-      <aside className="space-y-1">
-        <div className="mb-4 flex items-center gap-3 rounded-lg border border-border bg-card p-4">
+    <div className="container-page grid gap-6 py-6 lg:grid-cols-[240px_1fr] lg:gap-8 lg:py-10">
+      <aside className="lg:space-y-1">
+        <div className="mb-4 hidden items-center gap-3 rounded-lg border border-border bg-card p-4 lg:flex">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
             <User className="h-5 w-5" />
           </div>
@@ -91,30 +91,60 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
 
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted",
-              pathname === item.href && "bg-muted",
-            )}
+        <nav className="-mx-4 flex gap-2 overflow-x-auto border-b border-border px-4 pb-3 lg:hidden">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium",
+                pathname === item.href
+                  ? "border-secondary bg-secondary text-secondary-foreground"
+                  : "border-border text-foreground/80",
+              )}
+            >
+              <item.icon className="h-3.5 w-3.5" />
+              {item.label}
+            </Link>
+          ))}
+          <button
+            onClick={() => {
+              clear();
+              router.push("/");
+            }}
+            className="flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-destructive/30 px-3 py-1.5 text-xs font-medium text-destructive"
           >
-            <item.icon className="h-4 w-4" />
-            {item.label}
-          </Link>
-        ))}
+            <LogOut className="h-3.5 w-3.5" />
+            Log out
+          </button>
+        </nav>
 
-        <button
-          onClick={() => {
-            clear();
-            router.push("/");
-          }}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-destructive hover:bg-destructive/10"
-        >
-          <LogOut className="h-4 w-4" />
-          Log out
-        </button>
+        <div className="hidden lg:block lg:space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted",
+                pathname === item.href && "bg-muted",
+              )}
+            >
+              <item.icon className="h-4 w-4" />
+              {item.label}
+            </Link>
+          ))}
+
+          <button
+            onClick={() => {
+              clear();
+              router.push("/");
+            }}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-destructive hover:bg-destructive/10"
+          >
+            <LogOut className="h-4 w-4" />
+            Log out
+          </button>
+        </div>
       </aside>
 
       <div>{children}</div>
