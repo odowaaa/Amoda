@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Bookmark } from "lucide-react";
+import { Bookmark, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,6 +42,11 @@ export function PropertyFilters() {
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
   const [minBedrooms, setMinBedrooms] = useState(searchParams.get("minBedrooms") ?? "");
   const [city, setCity] = useState(searchParams.get("city") ?? "");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const activeFilterCount = Array.from(searchParams.keys()).filter(
+    (key) => !["page", "sortBy", "q"].includes(key),
+  ).length;
 
   function updateParam(key: string, value: string | null) {
     const params = new URLSearchParams(searchParams.toString());
@@ -77,7 +82,25 @@ export function PropertyFilters() {
   ];
 
   return (
-    <aside className="space-y-6 rounded-xl border border-border bg-card p-5">
+    <aside className="rounded-xl border border-border bg-card p-5 lg:space-y-6">
+      <button
+        type="button"
+        onClick={() => setMobileOpen((v) => !v)}
+        className="flex w-full items-center justify-between lg:hidden"
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold">
+          <SlidersHorizontal className="h-4 w-4" />
+          Filters
+          {activeFilterCount > 0 && (
+            <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
+              {activeFilterCount}
+            </span>
+          )}
+        </span>
+        <span className="text-sm text-muted-foreground">{mobileOpen ? "Hide" : "Show"}</span>
+      </button>
+
+      <div className={`space-y-6 ${mobileOpen ? "mt-6 block" : "hidden"} lg:mt-0 lg:block`}>
       <div>
         <Label htmlFor="city">City</Label>
         <Input id="city" value={city} onChange={(event) => setCity(event.target.value)} className="mt-1" placeholder="e.g. Mogadishu" />
@@ -154,6 +177,7 @@ export function PropertyFilters() {
           {saveSearchMutation.isSuccess ? "Search saved" : "Save this search"}
         </Button>
       )}
+      </div>
     </aside>
   );
 }
