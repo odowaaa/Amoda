@@ -76,9 +76,12 @@ export function Header() {
           )}
         </div>
 
-        <button className="md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          {user && <NotificationsBell />}
+          <button onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
