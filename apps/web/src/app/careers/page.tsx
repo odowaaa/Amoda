@@ -23,12 +23,12 @@ export default function CareersPage() {
       <div className="mx-auto mt-12 max-w-2xl space-y-4">
         {OPEN_ROLES.map((role) => (
           <Card key={role.title}>
-            <CardContent className="flex items-center justify-between pt-6">
+            <CardContent className="flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-semibold">{role.title}</p>
                 <p className="text-sm text-muted-foreground">{role.location}</p>
               </div>
-              <Badge variant="muted">{role.type}</Badge>
+              <Badge variant="muted" className="w-fit">{role.type}</Badge>
             </CardContent>
           </Card>
         ))}

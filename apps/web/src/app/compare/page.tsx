@@ -4,9 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Fragment } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { X } from "lucide-react";
+import { Scale, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import { apiClient } from "@/lib/api-client";
 import { clearCompare, listCompare } from "@/lib/api/interest";
 import { formatPrice } from "@/lib/utils";
@@ -57,9 +58,18 @@ export default function ComparePage() {
 
       {isLoading && <p className="text-muted-foreground">Loading...</p>}
       {!isLoading && (!data || data.length === 0) && (
-        <p className="text-muted-foreground">
-          No properties selected yet. Use the compare icon on a listing card or property page to add one.
-        </p>
+        <EmptyState
+          icon={Scale}
+          title="No properties selected yet"
+          description="Use the compare icon on a listing card or property page to add one."
+          action={
+            <Link href="/properties">
+              <Button variant="outline" size="sm">
+                Browse properties
+              </Button>
+            </Link>
+          }
+        />
       )}
 
       {data && data.length > 0 && (

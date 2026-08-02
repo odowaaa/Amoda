@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Newspaper } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import { formatDate } from "@/lib/utils";
 import { serverFetch } from "@/lib/server-fetch";
 import type { PaginatedResponse } from "@/lib/types";
@@ -27,7 +29,13 @@ export default async function BlogIndexPage() {
       <p className="mt-2 text-muted-foreground">Market insights, buying guides, and platform updates.</p>
 
       {result.data.length === 0 ? (
-        <p className="mt-12 text-muted-foreground">No articles published yet — check back soon.</p>
+        <div className="mt-12">
+          <EmptyState
+            icon={Newspaper}
+            title="No articles published yet"
+            description="Check back soon for market insights and platform updates."
+          />
+        </div>
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {result.data.map((post) => (

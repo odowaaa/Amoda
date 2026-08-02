@@ -1,8 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SearchX } from "lucide-react";
 import { PropertyCard } from "@/components/properties/property-card";
 import { PropertyFilters } from "@/components/properties/property-filters";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/empty-state";
 import { searchProperties } from "@/lib/api/properties";
 
 export const metadata: Metadata = {
@@ -51,9 +53,18 @@ export default async function PropertiesPage({ searchParams }: PageProps) {
 
         <div>
           {result.data.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
-              No properties match your filters. Try broadening your search.
-            </div>
+            <EmptyState
+              icon={SearchX}
+              title="No properties match your filters"
+              description="Try broadening your search or clearing filters to see more listings."
+              action={
+                <Link href="/properties">
+                  <Button variant="outline" size="sm">
+                    Clear filters
+                  </Button>
+                </Link>
+              }
+            />
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {result.data.map((property) => (

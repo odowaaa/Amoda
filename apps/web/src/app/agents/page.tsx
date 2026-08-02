@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { ShieldCheck, Star } from "lucide-react";
+import { ShieldCheck, Star, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import { serverFetch } from "@/lib/server-fetch";
 
 export const metadata: Metadata = { title: "Our Agents", description: "Meet AMODA's verified real estate agents." };
@@ -27,7 +28,13 @@ export default async function AgentsPage() {
       </div>
 
       {agents.length === 0 ? (
-        <p className="mt-12 text-center text-muted-foreground">No verified agents yet — check back soon.</p>
+        <div className="mt-12">
+          <EmptyState
+            icon={Users}
+            title="No verified agents yet"
+            description="Our team is onboarding agents across Somalia — check back soon."
+          />
+        </div>
       ) : (
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {agents.map((agent) => (

@@ -54,13 +54,13 @@ export default async function HomePage() {
       </section>
 
       <section className="container-page py-16">
-        <div className="mb-8 flex items-end justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-bold md:text-3xl">Featured properties</h2>
             <p className="mt-1 text-muted-foreground">Hand-picked listings from our top agents and developers</p>
           </div>
-          <Link href="/properties?featured=true" className="hidden md:block">
-            <Button variant="outline" className="gap-2">
+          <Link href="/properties?featured=true">
+            <Button variant="outline" className="w-full gap-2 sm:w-auto">
               View all <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
@@ -113,14 +113,18 @@ export default async function HomePage() {
               Reach thousands of verified buyers and tenants. Manage listings, bookings, and leads from a single
               dashboard built for real estate professionals.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link href="/register">
-                <Button variant="accent" size="lg">
+                <Button variant="accent" size="lg" className="w-full sm:w-auto">
                   Get started
                 </Button>
               </Link>
               <Link href="/pricing">
-                <Button variant="outline" size="lg" className="border-white/30 text-primary-foreground hover:bg-white/10">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full border-white/30 text-primary-foreground hover:bg-white/10 sm:w-auto"
+                >
                   View pricing
                 </Button>
               </Link>
