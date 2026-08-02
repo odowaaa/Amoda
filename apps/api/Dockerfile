@@ -28,6 +28,8 @@ COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/apps/api/prisma ./apps/api/prisma
 COPY --from=build /app/apps/api/package.json ./apps/api/package.json
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+COPY apps/api/docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
 
 EXPOSE 4000
-CMD ["node", "apps/api/dist/src/main.js"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
