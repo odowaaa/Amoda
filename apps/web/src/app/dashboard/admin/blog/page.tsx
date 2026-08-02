@@ -86,9 +86,9 @@ export default function AdminBlogPage() {
       <div className="space-y-3">
         {data?.map((post) => (
           <Card key={post.id}>
-            <CardContent className="flex items-center justify-between gap-4 pt-6">
-              <div>
-                <p className="font-semibold">{post.title}</p>
+            <CardContent className="flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <div className="min-w-0">
+                <p className="truncate font-semibold">{post.title}</p>
                 <Badge variant={post.status === "PUBLISHED" ? "success" : "muted"}>{post.status}</Badge>
               </div>
               <div className="flex gap-2">

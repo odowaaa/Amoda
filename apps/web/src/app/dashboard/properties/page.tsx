@@ -62,9 +62,9 @@ export default function DashboardPropertiesPage() {
       <div className="space-y-3">
         {data?.map((property) => (
           <Card key={property.id}>
-            <CardContent className="flex items-center justify-between gap-4 pt-6">
+            <CardContent className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <p className="truncate font-semibold">{property.title}</p>
                   <Badge variant={STATUS_VARIANT[property.status] ?? "default"}>{property.status.replace(/_/g, " ")}</Badge>
                   {property.isFeatured && <Badge variant="accent">Featured</Badge>}
@@ -74,7 +74,7 @@ export default function DashboardPropertiesPage() {
                 </p>
               </div>
 
-              <div className="flex shrink-0 items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
                 {isAdmin && property.status === "PENDING_REVIEW" && (
                   <>
                     <Button size="sm" onClick={() => statusMutation.mutate({ id: property.id, status: "PUBLISHED" })}>

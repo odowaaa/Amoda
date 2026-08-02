@@ -131,7 +131,7 @@ export function PropertyForm({ property }: { property?: PropertyDetail }) {
             {errors.description && <p className="mt-1 text-xs text-destructive">{errors.description.message}</p>}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="type">Property type</Label>
               <select id="type" className="mt-1 h-10 w-full rounded-lg border border-border bg-card px-3 text-sm" {...register("type")}>
@@ -158,7 +158,7 @@ export function PropertyForm({ property }: { property?: PropertyDetail }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <Label htmlFor="price">Price</Label>
               <Input id="price" type="number" step="0.01" className="mt-1" {...register("price", { valueAsNumber: true })} />
@@ -174,7 +174,7 @@ export function PropertyForm({ property }: { property?: PropertyDetail }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <Label htmlFor="areaSqm">Area (m²)</Label>
               <Input id="areaSqm" type="number" className="mt-1" {...register("areaSqm", { valueAsNumber: true })} />
